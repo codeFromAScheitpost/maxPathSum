@@ -8,6 +8,8 @@ def max_sum(triangle: list[list[int]]):
     :param triangle: list representation of a triangle with the list at triangle[0] has length 1 and for all i length(triangle[i])+1=length(triangle[i+1])
     :return: value of the max path sum
     """
+    if len(triangle)<1:
+        raise ValueError("empty triangle input is not supported")
     # each iteration the triangle is shrunk by one line
     while len(triangle) != 1:
 
@@ -34,7 +36,7 @@ def read_file_to_triangle(file_path: str):
     triangle: list[list[int]] = list(map(lambda x: list(map(lambda y: int(y), x)), lines))
 
     # checks if the input triangle is well-formed.
-    for i in range(0, len(triangle) - 2):
+    for i in range(0, len(triangle) - 1):
         if len(triangle[i]) + 1 != len(triangle[i + 1]):
             raise ValueError("the input is malformed, not each line is followed by a line that is one element larger")
 
