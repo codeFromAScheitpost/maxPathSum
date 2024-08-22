@@ -1,4 +1,4 @@
-import sys
+import click
 
 
 def max_sum(triangle: list[list[int]]):
@@ -8,7 +8,7 @@ def max_sum(triangle: list[list[int]]):
     :param triangle: list representation of a triangle with the list at triangle[0] has length 1 and for all i length(triangle[i])+1=length(triangle[i+1])
     :return: value of the max path sum
     """
-    if len(triangle)<1:
+    if len(triangle) < 1:
         raise ValueError("empty triangle input is not supported")
     # each iteration the triangle is shrunk by one line
     while len(triangle) != 1:
@@ -43,17 +43,19 @@ def read_file_to_triangle(file_path: str):
     return triangle
 
 
-if __name__ == '__main__':
+@click.command()
+@click.option('-e', '--exercise', type=int, default=1)
+def main(exercise: int):
     # to run part one use 1 as input, to run part two use 2.
     # the input was chosen because the exercise specified only those two problems a file input would be possible as well
-    if len(sys.argv) < 2:
-        part_nr = 1
-    else:
-        part_nr = int(sys.argv[1])
 
-    if part_nr < 1 or part_nr > 2:
+    if exercise < 1 or exercise > 2:
         raise IndexError("input should be 1 or 2")
 
     exercise_files = ["ex01.txt", "triangle.txt"]
-    read_triangle = read_file_to_triangle(exercise_files[part_nr - 1])
-    print("the length of the maximal path for part ", part_nr, "is: ", max_sum(read_triangle))
+    read_triangle = read_file_to_triangle(exercise_files[exercise - 1])
+    print("the length of the maximal path for part ", exercise, "is: ", max_sum(read_triangle))
+
+
+if __name__ == '__main__':
+    main()
